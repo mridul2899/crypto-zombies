@@ -1,4 +1,4 @@
-// A contracts is the fundamental building block of Ethereum apps.
+// A contract is the fundamental building block of Ethereum apps.
 // It stores all the variables and functions.
 
 // 1. Enter solidity version here
