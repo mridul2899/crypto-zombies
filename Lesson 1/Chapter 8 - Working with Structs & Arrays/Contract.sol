@@ -21,5 +21,6 @@ contract ZombieFactory {
         zombies.push(Zombie(_name, _dna));
 
         // Push adds element to the end of an array.
+        // Moreover, push returns the length of the array after the push.
     }
 }
