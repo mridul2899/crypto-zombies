@@ -34,7 +34,24 @@ contract ZombieFeeding is ZombieFactory {
 
     KittyInterface kittyContract;
 
-    function setKittyContractAddress(address _address) external {
+    // Chapter 3 - onlyOwner Function Modifier
+    // Function modifier uses the keyword "modifier" instead of the keyword "function".
+    // It cannot be directly called unlike functions,
+    // and can only be attached at the end of a function definition
+    // to change the function's behaviour.
+    // When a function with onlyOwner modifier is called,
+    // it first executes the code within the modifier.
+    // Once it hits the _; statement in onlyOwner,
+    // it goes back and executes the code inside the function.
+
+    // Note:
+    // Giving owner special powers can also be used maliciously.
+    // For example, the owner can add a backdoor function
+    // that can make them take ownership of all the zombies.
+    // Therefore, we need to read the source code to make sure a
+    // DApp on Ethereum is actually decentralized.
+
+    function setKittyContractAddress(address _address) external onlyOwner {
         kittyContract = KittyInterface(_address);
     }
 
