@@ -39,6 +39,15 @@ contract KittyInterface {
 }
 
 contract ZombieFeeding is ZombieFactory {
+    // Chapter 11 - Using an Interface
+    // To interact with CryptoKitties contract on the blockchain, we first need to have its address.
+    address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
+
+    // Next we create an instance of the KittyInterface contract,
+    // which would point to the CryptoKitties contract.
+    // Thereafter, we can call the functions such as getKitty from the interface variable.
+    KittyInterface kittyContract = KittyInterface(ckAddress);
+
     // Chapter 7 - Data Location - Storage & Memory
     // In Solidity, there are two types of locations to store variables - storage and memory.
     // Storage variables are stored permanently on the blockchain.
