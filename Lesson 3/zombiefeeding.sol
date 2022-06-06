@@ -55,6 +55,20 @@ contract ZombieFeeding is ZombieFactory {
         kittyContract = KittyInterface(_address);
     }
 
+    // Chapter 6 - Passing Structs as Arguments
+    // It is possible to pass a storage pointer to a struct
+    // as an argument to a private or internal function.
+    // Syntax: function _doStuff(Zombie storage _zombie) internal {}
+    // This way we can pass a reference to a struct into a function instead of looking it up with id.
+
+    function _triggerCooldown(Zombie storage _zombie) internal {
+        _zombie.readyTime = uint32(now + cooldownTime);
+    }
+
+    function _isReady(Zombie storage _zombie) internal view returns (bool) {
+        return (_zombie.readyTime <= now);
+    }
+
     function feedAndMultiply(
         uint256 _zombieId,
         uint256 _targetDna,
