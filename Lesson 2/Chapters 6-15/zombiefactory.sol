@@ -16,7 +16,9 @@ contract ZombieFactory {
     mapping(uint256 => address) public zombieToOwner;
     mapping(address => uint256) ownerZombieCount;
 
-    function _createZombie(string memory _name, uint256 _dna) private {
+    // Chapter 9 - More on Function Visibility
+    // Change the visibility of _createZombie() from private to internal.
+    function _createZombie(string memory _name, uint256 _dna) internal {
         uint256 id = zombies.push(Zombie(_name, _dna)) - 1;
         zombieToOwner[id] = msg.sender;
         ownerZombieCount[msg.sender]++;

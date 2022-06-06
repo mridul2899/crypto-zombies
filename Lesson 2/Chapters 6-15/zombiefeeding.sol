@@ -29,6 +29,16 @@ contract ZombieFeeding is ZombieFactory {
         // Chapter 8 - Zombie DNA
         _targetDna = _targetDna % dnaModulus;
         uint256 newDna = (myZombie.dna + _targetDna) / 2;
+
+        // Chapter 9 - More on Function Visibility
+        // In Chapter 8, we called a private function from within ZombieFeeding.
+        // However, it's a private function inside ZombieFactory.
+        // This means none of the inherited contracts can access it, and therefore it was a mistake.
+
+        // Soliidity has two more visibility keywords: internal and external.
+        // internal is same as private, except that it's accessible from inherited contracts.
+        // external is similar to public, except that functions can only be called outside the contract.
+        // external functions cannot be called by other functions inside that contract.
         _createZombie("NoName", newDna);
     }
 }
