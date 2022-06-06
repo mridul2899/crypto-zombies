@@ -82,4 +82,19 @@ contract ZombieFeeding is ZombieFactory {
         // external functions cannot be called by other functions inside that contract.
         _createZombie("NoName", newDna);
     }
+
+    // Chapter 12 - Handling Multiple Return Values
+    // To return multiple values from a function, we simply use return keyword
+    // and specify the values to return in paretheses, separated by commas.
+    // Similarly, to assign multiple returned values,
+    // we put the names of all the variables inside the parentheses, separated by commas,
+    // and assign to them the function call.
+    // We may leave fields inside the parentheses blank if we only care about certain values
+    // among all the returned values while assignment.
+
+    function feedOnKitty(uint256 _zombieId, uint256 _kittyId) public {
+        uint256 kittyDna;
+        (, , , , , , , , , kittyDna) = kittyContract.getKitty(_kittyId);
+        feedAndMultiply(_zombieId, kittyDna);
+    }
 }
