@@ -24,6 +24,17 @@ contract ZombieFactory is Ownable {
     uint256 dnaDigits = 16;
     uint256 dnaModulus = 10**dnaDigits;
 
+    // Chapter 5 - Time Units, Part 1
+    // In Solidity, variable now returns the current unix timestamp of the latest block.
+    // This is the time in seconds since Jan 1, 1970.
+    // Although unix time is usually stored in 32-bit uints, this will lead to overflow in 2038.
+    // Using a 64-bit uint would be costly for users in terms of gas, leading to a tradeoff.
+
+    // Solidity also has time units - seconds, minutes, hours, days, weeks and years.
+    // These convert uint into number of seconds contained in the unit.
+
+    uint256 cooldownTime = 1 days;
+
     struct Zombie {
         string name;
         uint256 dna;
@@ -57,7 +68,12 @@ contract ZombieFactory is Ownable {
     mapping(address => uint256) ownerZombieCount;
 
     function _createZombie(string memory _name, uint256 _dna) internal {
-        uint256 id = zombies.push(Zombie(_name, _dna)) - 1;
+        // Chapter 5 - Time Units, Part 2
+        // In the below line of code,
+        // it is necessary to typecast to uint32 because now returns a uint256 by default.
+        uint256 id = zombies.push(
+            Zombie(_name, _dna, 1, uint32(now + cooldownTime))
+        ) - 1;
         zombieToOwner[id] = msg.sender;
         ownerZombieCount[msg.sender]++;
         emit NewZombie(id, _name, _dna);
