@@ -69,13 +69,23 @@ contract ZombieFeeding is ZombieFactory {
         return (_zombie.readyTime <= now);
     }
 
+    // Chapter 7 - Public Functions and Security
+    // An important security practice is to examine all public and external functions,
+    // and try to find ways users may abuse them.
+    // Without a modifier such as onlyOwner, any user can call them and pass any data they want to.
+    // If a function only needs to be called by a particular function,
+    // easiest way to prevent such exploits is by making the function internal.
+
     function feedAndMultiply(
         uint256 _zombieId,
         uint256 _targetDna,
         string memory _species
-    ) public {
+    ) internal {
         require(msg.sender == zombieToOwner[_zombieId]);
         Zombie storage myZombie = zombies[_zombieId];
+
+        require(_isReady(myZombie));
+
         _targetDna = _targetDna % dnaModulus;
         uint256 newDna = (myZombie.dna + _targetDna) / 2;
         if (
@@ -85,6 +95,7 @@ contract ZombieFeeding is ZombieFactory {
             newDna = newDna - (newDna % 100) + 99;
         }
         _createZombie("NoName", newDna);
+        _triggerCooldown(myZombie);
     }
 
     function feedOnKitty(uint256 _zombieId, uint256 _kittyId) public {
