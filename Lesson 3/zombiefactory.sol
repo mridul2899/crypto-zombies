@@ -1,6 +1,24 @@
 pragma solidity >=0.5.0 <0.6.0;
 
-contract ZombieFactory {
+// Chapter 2 - Ownable Contracts
+// In the last chapter, anyone can change the address of the contract by calling the external function.
+// Therefore, we would rely on Ownable contracts from OpenZeppelin to secure our DApp.
+// Ownable contract does the following:
+// 1. When a contract is created, it sets the owner to msg.sender (person who deployed it)
+// 2. It adds an onlyOwner modifier, which can restrict access to certain functions to only the owner
+// 3. It allows transferring ownership of a contract to a new owner.
+
+// Note:
+// A constructor is an optional function with the same name as the contract.
+// It gets executed only once, when the contract is first created.
+
+// Note:
+// Function modifiers are kind of half-functions used to modify other functions.
+// These are usually used to check some requirements before executing the function.
+
+import "./ownable.sol";
+
+contract ZombieFactory is Ownable {
     event NewZombie(uint256 zombieId, string name, uint256 dna);
 
     uint256 dnaDigits = 16;
