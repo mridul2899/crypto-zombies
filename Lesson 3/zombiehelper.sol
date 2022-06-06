@@ -73,6 +73,28 @@ contract ZombieHelper is ZombieFeeding {
         // This may change in a future version of Solidity, however.
 
         uint256[] memory result = new uint256[](ownerZombieCount[_owner]);
+
+        // Chapter 12 - For Loops
+        // Sometimes we may want to use a for loop to build the contents of an array
+        // in a function rather than simply saving array to storage.
+        // This becomes specially relevant in cases where we may need to change index of
+        // array elements because then we will have to perform writes for every index change
+        // and that is one of the most expensive operations.
+        // Moreover, the amount of gas needed would differ on each call,
+        // depending on number of elements needing change in the index.
+        // Thus, the user will not know how much gas to send.
+        // Since external view functions don't cost gas,
+        // using a for loop for building arrays would be much cheaper.
+
+        // The syntax of for loops in Solidity is similar to JavaScript.
+        uint256 counter = 0;
+        for (uint256 i = 0; i < zombies.length; i++) {
+            if (zombieToOwner[i] == _owner) {
+                result[counter] = i;
+                counter++;
+            }
+        }
+
         return result;
     }
 }
