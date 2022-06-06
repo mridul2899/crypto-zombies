@@ -52,5 +52,27 @@ contract ZombieHelper is ZombieFeeding {
         external
         view
         returns (uint256[] memory)
-    {}
+    {
+        // Chapter 11 - Storage is Expensive
+        // Using storage (data location) - particularly writes are expensive operations in Solidity.
+        // This is because any change in data is written permanently to the blockchain.
+        // And this data is replicated on thousands of nodes.
+        // Therefore, to keep costs low, it is important to write to storage only when necessary.
+        // This can be inefficiet though especially when copying data into the memory on every call.
+        // In Solidity, looping over data is way cheaper than using storage in external view functions,
+        // as external view functions don't cost users any gas.
+
+        // Declaring arrays in memory
+        // Use memory keyword with arrays to create a new array inside a function
+        // This doesn't need writing anything to storage.
+        // This array will exist until the end of the function call.
+        // Syntax - uint[] memory varName = new uint[](length);
+
+        // Note: Memory arrays must be created with a length argument.
+        // They currently cannot be resized unlike storage arrays with array.push().
+        // This may change in a future version of Solidity, however.
+
+        uint256[] memory result = new uint256[](ownerZombieCount[_owner]);
+        return result;
+    }
 }
