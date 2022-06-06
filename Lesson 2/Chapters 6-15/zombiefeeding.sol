@@ -38,6 +38,10 @@ contract KittyInterface {
         );
 }
 
+// Chapter 14 - Wrap Up
+// For putting our application built so far into the blockchain, we will need to compile
+// and deploy the ZombieFeeding contract, and since it inherits from ZombieFactory,
+// that will automatically get taken care of.
 contract ZombieFeeding is ZombieFactory {
     // Chapter 11 - Using an Interface
     // To interact with CryptoKitties contract on the blockchain, we first need to have its address.
