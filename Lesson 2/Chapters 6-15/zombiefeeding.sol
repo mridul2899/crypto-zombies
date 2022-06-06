@@ -1,11 +1,13 @@
 pragma solidity >=0.5.0 <0.6.0;
 
+// Chapter 6 - Import
 // put import statement here
 // We use import statements to split our codes into different files,
 // hence making the codebase manageable.
 import "./zombiefactory.sol";
 
 contract ZombieFeeding is ZombieFactory {
+    // Chapter 7 - Data Location - Storage & Memory
     // In Solidity, there are two types of locations to store variables - storage and memory.
     // Storage variables are stored permanently on the blockchain.
     // Memory variables are temporary, and are erased between external function calls to the contract.
@@ -24,7 +26,7 @@ contract ZombieFeeding is ZombieFactory {
         require(zombieToOwner[_zombieId] == msg.sender);
         Zombie storage myZombie = zombies[_zombieId];
 
-        // start here
+        // Chapter 8 - Zombie DNA
         _targetDna = _targetDna % dnaModulus;
         uint256 newDna = (myZombie.dna + _targetDna) / 2;
         _createZombie("NoName", newDna);
