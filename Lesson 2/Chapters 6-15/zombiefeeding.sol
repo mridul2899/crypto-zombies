@@ -63,13 +63,29 @@ contract ZombieFeeding is ZombieFactory {
     // and any change will modify only the temporary variable, not the original.
     // Changing the permanent storage value, in this case, would need explicit value change.
 
-    function feedAndMultiply(uint256 _zombieId, uint256 _targetDna) public {
+    // Chapter 13 - If statements Part 1
+    // if statements in Solidity look similar to those in javascript.
+    // Modify function definition here:
+    function feedAndMultiply(
+        uint256 _zombieId,
+        uint256 _targetDna,
+        string memory _species
+    ) public {
         require(zombieToOwner[_zombieId] == msg.sender);
         Zombie storage myZombie = zombies[_zombieId];
 
         // Chapter 8 - Zombie DNA
         _targetDna = _targetDna % dnaModulus;
         uint256 newDna = (myZombie.dna + _targetDna) / 2;
+
+        // Chapter 13 - If statements Part 2
+        // Add an if statement here
+        if (
+            keccak256(abi.encodePacked(_species)) ==
+            keccak256(abi.encodePacked("kitty"))
+        ) {
+            newDna = newDna - (newDna % 100) + 99;
+        }
 
         // Chapter 9 - More on Function Visibility
         // In Chapter 8, we called a private function from within ZombieFeeding.
@@ -95,6 +111,9 @@ contract ZombieFeeding is ZombieFactory {
     function feedOnKitty(uint256 _zombieId, uint256 _kittyId) public {
         uint256 kittyDna;
         (, , , , , , , , , kittyDna) = kittyContract.getKitty(_kittyId);
-        feedAndMultiply(_zombieId, kittyDna);
+
+        // Chapter 13 - If statements Part 3
+        // And modify function call here:
+        feedAndMultiply(_zombieId, kittyDna, "kitty");
     }
 }
