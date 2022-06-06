@@ -27,6 +27,28 @@ contract ZombieFactory is Ownable {
     struct Zombie {
         string name;
         uint256 dna;
+        // Chapter 4 - Gas
+        // In solidity, users have to pay a currency called gas
+        // every time they execute a DApp function.
+        // Users buy gas with Ether on Ethereum, and therefore need to spend ETH.
+        // The amount of gas required depends on complexity of the function's logic.
+        // Each individual operation has a gas cost based on computing resources needed.
+        // For example, storage is much more expensive than adding two integers.
+        // Hence, code optimization is very important in Ethereum.
+        // Gas is necessary to prevent Ethereum network from clogging by intensive
+        // computations set by malicious users.
+
+        // Struct packing
+        // Normally there is no benefit of using uint8, uint16, uint32 etc.
+        // as Solidity reserves 256 bits of storage regardless of the uint size.
+        // But there is an exception in case of structs.
+        // Using smaller-sized uints inside structs allows Solidity to pack variables together.
+        // Thus, they end up taking lesser storage.
+        // Moreover, clustering identical data types together can
+        // minimize the required storage space.
+
+        uint32 level;
+        uint32 readyTime;
     }
 
     Zombie[] public zombies;
