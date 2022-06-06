@@ -30,12 +30,10 @@ contract ZombieFeeding is ZombieFactory {
 
     // In previous lesson, we had hard-coded the CryptoKitties contact address.
     // Therefore it is better to have functions to allow updating the key portions of the DApp.
-    // We have therefore removed the hard-coded address assignment.
+    // We have therefore removed the hard-coded address assignment and added the function.
 
-    // 2. Change this to just a declaration:
     KittyInterface kittyContract;
 
-    // 3. Add setKittyContractAddress method here
     function setKittyContractAddress(address _address) external {
         kittyContract = KittyInterface(_address);
     }
