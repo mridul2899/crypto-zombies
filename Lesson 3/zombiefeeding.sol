@@ -21,8 +21,24 @@ contract KittyInterface {
 }
 
 contract ZombieFeeding is ZombieFactory {
-    address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
-    KittyInterface kittyContract = KittyInterface(ckAddress);
+    // Chapter 1 - Immutability of Contracts
+    // Ethereum DApps are quite different from normal applications in a number of ways.
+    // Once a contract is deployed to Ethereum, it is immutable.
+    // The initial code for the contract stays permanently on the blockchain.
+    // Therefore, security is a huge concern in Solidity.
+    // The only way to fix flaws would be to give your users a new address for corrected contract.
+
+    // In previous lesson, we had hard-coded the CryptoKitties contact address.
+    // Therefore it is better to have functions to allow updating the key portions of the DApp.
+    // We have therefore removed the hard-coded address assignment.
+
+    // 2. Change this to just a declaration:
+    KittyInterface kittyContract;
+
+    // 3. Add setKittyContractAddress method here
+    function setKittyContractAddress(address _address) external {
+        kittyContract = KittyInterface(_address);
+    }
 
     function feedAndMultiply(
         uint256 _zombieId,
