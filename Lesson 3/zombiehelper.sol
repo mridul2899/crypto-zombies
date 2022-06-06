@@ -34,4 +34,23 @@ contract ZombieHelper is ZombieFeeding {
         require(msg.sender == zombieToOwner[_zombieId]);
         zombies[_zombieId].dna = _newDna;
     }
+
+    // Chapter 10 - Saving Gas with 'View' Functions
+    // View function are used to only read data from the blockchain.
+    // View functions do not cost any gas when they're called externally by a user.
+    // This is because view functions don't actually change anything on the blockchain.
+    // Therefore, view tells web3.js to query your local Ethereum node to run the function,
+    // and it doesn't actually have to create a txn which runs on the blockchain,
+    // to be run by every single node and cost gas.
+    // Therefore, DApp's gas usage can be optimized using read-only external view functions.
+
+    // Note: If a view function is called internally from another function in the same contract,
+    // it will still cost gas because the other function creates a txn on Ethereum,
+    // and will still need to be verified from every node.
+
+    function getZombiesByOwner(address _owner)
+        external
+        view
+        returns (uint256[] memory)
+    {}
 }
