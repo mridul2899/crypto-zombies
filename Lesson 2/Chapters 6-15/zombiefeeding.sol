@@ -6,6 +6,38 @@ pragma solidity >=0.5.0 <0.6.0;
 // hence making the codebase manageable.
 import "./zombiefactory.sol";
 
+// Chapter 10 - Interacting with Other Contracts
+// We need to define an interface to interact with other contracts deployed on the blockchain.
+// Even though defining an interface is looks like defining a contract, there are some differences.
+// In an interface, we only declare the functions that we want to interact with.
+// We don't mention any of the other functions or state variables.
+// Moreover, we don't define function bodies.
+// Instead of curly braces ({ and }), we end the function declaration with semicolon (;).
+// This allows our contract to know what other contract's functions look like, how to call them,
+// and what sort of response to expect.
+
+// In Solidity, a function can return more than one values,
+// and all such values can be specified after the return keyword within parentheses, separated by commas.
+
+// To interact with CryptoKitties contract on the blockchain.
+contract KittyInterface {
+    function getKitty(uint256 _id)
+        external
+        view
+        returns (
+            bool isGestating,
+            bool isReady,
+            uint256 cooldownIndex,
+            uint256 nextActionAt,
+            uint256 siringWithId,
+            uint256 birthTime,
+            uint256 matronId,
+            uint256 sireId,
+            uint256 generation,
+            uint256 genes
+        );
+}
+
 contract ZombieFeeding is ZombieFactory {
     // Chapter 7 - Data Location - Storage & Memory
     // In Solidity, there are two types of locations to store variables - storage and memory.
