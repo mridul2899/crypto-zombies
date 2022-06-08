@@ -2,8 +2,21 @@ pragma solidity >=0.5.0 <0.6.0;
 
 import "./ownable.sol";
 
+// Chapter 9 - Preventing Overflows
+// While uint256 can store large numbers,
+// we should still prevent against overflows & underflows.
+// To do this, OpenZeppelin has created a library called SafeMath.
+// A library is a special type of contract in Solidity.
+// It is useful for attaching attach functions to native data types.
+// Syntax: using libraryName for dataTypeName;
+
+import "./safemath.sol";
+
 contract ZombieFactory is Ownable {
     event NewZombie(uint256 zombieId, string name, uint256 dna);
+
+    using SafeMath for uint256;
+    // It would now be possible to call SafeMath methods on uint256 variables.
 
     uint256 dnaDigits = 16;
     uint256 dnaModulus = 10**dnaDigits;
