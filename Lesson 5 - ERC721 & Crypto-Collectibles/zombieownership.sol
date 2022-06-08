@@ -87,5 +87,8 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
         onlyOwnerOf(_tokenId)
     {
         zombieApprovals[_tokenId] = _approved;
+
+        // Chapter 8 - ERC721: Approve
+        emit Approval(msg.sender, _approved, _tokenId);
     }
 }
