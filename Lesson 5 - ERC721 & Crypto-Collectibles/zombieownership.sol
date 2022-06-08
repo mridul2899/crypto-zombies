@@ -65,6 +65,13 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
         emit Transfer(_from, _to, _tokenId);
         // Transfer here is an event described in ERC721 standard,
         // which needs to be fired upon token transfer.
+
+        // Delete approval for zombie, to prevent a loophole
+        // Otherwise, suppose owner has approved an address,
+        // and then transfers the ownership of the token to another address.
+        // The approved address can then call transferFrom to steal the token to whom
+        // the owner originally transferred.
+        delete zombieApprovals[_tokenId];
     }
 
     // Chapter 6 - ERC721: Transfer Cont'd - Part 2
