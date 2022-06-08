@@ -59,8 +59,19 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
         address _to,
         uint256 _tokenId
     ) private {
-        ownerZombieCount[_to]++;
-        ownerZombieCount[_from]--;
+        // Chapter 10 - SafeMath Part 2
+        // library keyword is used instead of contract for libraries.
+        // using keyword automatically allows that data type variables to use library methods.
+        // Even though some functions like add require 2 arguments,
+        // When we call it on a variable, the variable is automatically passed as the first arg.
+
+        // assert is similar to require, where it will throw an error if false.
+        // The difference is that require will refund the rest of user's gas, while assert doesn't.
+        // Therefore, assert is only used when something goes horribly wrong with the code.
+        // Overflow would be one such case.
+
+        ownerZombieCount = ownerZombieCount[_to].add(1);
+        ownerZombieCount = ownerZombieCount[_from].sub(1);
         zombieToOwner[_tokenId] = _to;
         emit Transfer(_from, _to, _tokenId);
         // Transfer here is an event described in ERC721 standard,
