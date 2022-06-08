@@ -70,8 +70,8 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
         // Therefore, assert is only used when something goes horribly wrong with the code.
         // Overflow would be one such case.
 
-        ownerZombieCount = ownerZombieCount[_to].add(1);
-        ownerZombieCount = ownerZombieCount[_from].sub(1);
+        ownerZombieCount[_to] = ownerZombieCount[_to].add(1);
+        ownerZombieCount[_from] = ownerZombieCount[_from].sub(1);
         zombieToOwner[_tokenId] = _to;
         emit Transfer(_from, _to, _tokenId);
         // Transfer here is an event described in ERC721 standard,
