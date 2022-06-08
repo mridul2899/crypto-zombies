@@ -31,6 +31,9 @@ import "./zombieattack.sol";
 import "./erc721.sol";
 
 contract ZombieOwnership is ZombieAttack, ERC721 {
+    // Chapter 6 - ERC721: Transfer Cont'd - Part 1
+    mapping(uint256 => address) zombieApprovals;
+
     // Chapter 3 - balanceOf & ownerOf
     function balanceOf(address _owner) external view returns (uint256) {
         return ownerZombieCount[_owner];
@@ -63,4 +66,19 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
         // Transfer here is an event described in ERC721 standard,
         // which needs to be fired upon token transfer.
     }
+
+    // Chapter 6 - ERC721: Transfer Cont'd - Part 2
+    function transferFrom(
+        address _from,
+        address _to,
+        uint256 _tokenId
+    ) external payable {
+        require(
+            zombieToOwner[_tokenId] == msg.sender ||
+                zombieApprovals[_tokenId] == msg.sender
+        );
+        _transfer(_from, _to, _tokenId);
+    }
+
+    function approve(address _approved, uint256 _tokenId) external payable {}
 }
