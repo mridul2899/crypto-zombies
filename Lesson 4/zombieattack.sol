@@ -56,5 +56,13 @@ contract ZombieAttack is ZombieHelper {
     }
 
     // Chapter 5 - Zombie Fightin' - Part 2
-    function attack(uint256 _zombieId, uint256 _targetId) external {}
+    // Chapter 8 - Back to Attack!
+    function attack(uint256 _zombieId, uint256 _targetId)
+        external
+        ownerOf(_zombieId)
+    {
+        Zombie storage myZombie = zombies[_zombieId];
+        Zombie storage enemyZombie = zombies[_targetId];
+        uint256 rand = randMod(100);
+    }
 }
