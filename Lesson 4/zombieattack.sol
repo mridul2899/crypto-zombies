@@ -72,5 +72,12 @@ contract ZombieAttack is ZombieHelper {
             enemyZombie.lossCount++;
             feedAndMultiply(_zombieId, enemyZombie.dna, "zombie");
         }
+        // Chapter 11 - If-else
+        // Else statements in Solidity are written just like in JavaScript.
+        else {
+            myZombie.lossCount++;
+            enemyZombie.winCount++;
+            _triggerCooldown(myZombie);
+        }
     }
 }
