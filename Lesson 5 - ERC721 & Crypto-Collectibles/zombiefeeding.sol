@@ -23,7 +23,12 @@ contract KittyInterface {
 contract ZombieFeeding is ZombieFactory {
     KittyInterface kittyContract;
 
-    modifier ownerOf(uint256 _zombieId) {
+    // Chapter 4 - Refactoring
+    // In the previous chapter, in the ZombieOwnership contract,
+    // we introduced a function ownerOf. However, ownerOf is already a modifier too.
+    // Since we cannot change the names of ERC721 functions,
+    // we would change the name of our modifier.
+    modifier onlyOwnerOf(uint256 _zombieId) {
         require(msg.sender == zombieToOwner[_zombieId]);
         _;
     }
@@ -44,7 +49,7 @@ contract ZombieFeeding is ZombieFactory {
         uint256 _zombieId,
         uint256 _targetDna,
         string memory _species
-    ) internal ownerOf(_zombieId) {
+    ) internal onlyOwnerOf(_zombieId) {
         Zombie storage myZombie = zombies[_zombieId];
         require(_isReady(myZombie));
         _targetDna = _targetDna % dnaModulus;
