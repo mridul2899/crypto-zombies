@@ -3,7 +3,7 @@ pragma solidity >=0.5.0 <0.6.0;
 import "./zombiefeeding.sol";
 
 contract ZombieHelper is ZombieFeeding {
-    // Chapter 1 - Payable
+    // Chapter 1 - Payable - Part 1
     // Payable functions are special functions that can receive Ether.
     // msg.value is a way to see how much Ether was sent to the contract.
     // Ether is a built-in unit.
@@ -16,6 +16,7 @@ contract ZombieHelper is ZombieFeeding {
         _;
     }
 
+    // Chapter 1 - Payable - Part 2
     function levelUp(uint256 _zombieId) external payable {
         require(msg.value == levelUpFee);
         zombies[_zombieId].level++;
