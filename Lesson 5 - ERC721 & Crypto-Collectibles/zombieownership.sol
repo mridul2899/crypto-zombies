@@ -30,6 +30,20 @@ import "./zombieattack.sol";
 
 import "./erc721.sol";
 
+// Chapter 13 - Comments
+// It's a good practice to comment your codes.
+// Solidity supports multiline comments too /* --- */
+// The standard in the Solidity community is to use a format called natspec, which uses tags.
+// @title and @author in natspec are straightforward.
+// @notice explains to a user what the contract/function does.
+// @dev is for explaining extra details to developers.
+// @param and @return are for describing parameters and return values of a function.
+// While all tags are optional, at least leave a @dev tag for explaining what each function does.
+// Natspec tags are preceded by 3 slashes (///).
+
+/// @title A contract that manages transferring zombie ownership.
+/// @author mridul2899
+/// @dev Compliant with OpenZeppelin's implementation of the ERC721 spec draft.
 contract ZombieOwnership is ZombieAttack, ERC721 {
     // Chapter 6 - ERC721: Transfer Cont'd - Part 1
     mapping(uint256 => address) zombieApprovals;
