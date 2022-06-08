@@ -24,4 +24,10 @@ pragma solidity >=0.5.0 <0.6.0;
 
 import "./zombieattack.sol";
 
-contract ZombieOwnership is ZombieAttack {}
+// Chapter 2 - ERC721 Standard, Multiple Inheritance
+// When implementing a token contract, copy the interface to its own Solidity file and import it.
+// In Solidity, a contract can inherit from multiple contracts, separated by commas.
+
+import "./erc721.sol";
+
+contract ZombieOwnership is ZombieAttack, ERC721 {}
