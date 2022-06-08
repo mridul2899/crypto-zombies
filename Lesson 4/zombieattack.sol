@@ -45,10 +45,16 @@ contract ZombieAttack is ZombieHelper {
 
     uint256 randNonce = 0;
 
+    // Chapter 5 - Zombie Fightin' - Part 1
+    uint256 attackVictoryProbability = 70;
+
     function randMod(uint256 _modulus) internal returns (uint256) {
         randNonce++;
         return
             uint256(keccak256(abi.encodePacked(now, msg.sender, randNonce))) %
             _modulus;
     }
+
+    // Chapter 5 - Zombie Fightin' - Part 2
+    function attack(uint256 _zombieId, uint256 _targetId) external {}
 }
