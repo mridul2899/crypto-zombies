@@ -39,4 +39,28 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
     function ownerOf(uint256 _tokenId) external view returns (address) {
         return zombieToOwner[_tokenId];
     }
+
+    // Chapter 5 - ERC721: Transfer Logic
+    // ERC721 spec has 2 different ways to transfer tokens:
+    // 1. Token's owner calls transferFrom with their address as the _from,
+    // receiver's address as the _to, and the _tokenId of the token to transfer.
+    // 2. Token's owner first calls approve with the _to address and _tokenId.
+    // The approved address is usually stored in a mapping.
+    // Then the approved receiver calls transferFrom.
+
+    // transferFrom checks whether msg.sender is owner or approved receiver.
+    // If yes, the token gets transferred.
+
+    function _transfer(
+        address _from,
+        address _to,
+        uint256 _tokenId
+    ) private {
+        ownerZombieCount[_to]++;
+        ownerZombieCount[_from]--;
+        zombieToOwner[_tokenId] = _to;
+        emit Transfer(_from, _to, _tokenId);
+        // Transfer here is an event described in ERC721 standard,
+        // which needs to be fired upon token transfer.
+    }
 }
