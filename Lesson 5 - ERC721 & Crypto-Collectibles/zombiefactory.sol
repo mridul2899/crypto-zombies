@@ -18,6 +18,13 @@ contract ZombieFactory is Ownable {
     using SafeMath for uint256;
     // It would now be possible to call SafeMath methods on uint256 variables.
 
+    // Chapter 11 - SafeMath Part 3 - Part 1
+    // To handle uint32 and uint16, we use SafeMath32 and SafeMath16 respectively.
+    // This is essential because SafeMath expects uint256 arguments.
+
+    using SafeMath32 for uint32;
+    using SafeMath16 for uint16;
+
     uint256 dnaDigits = 16;
     uint256 dnaModulus = 10**dnaDigits;
     uint256 cooldownTime = 1 days;
@@ -37,11 +44,15 @@ contract ZombieFactory is Ownable {
     mapping(address => uint256) ownerZombieCount;
 
     function _createZombie(string memory _name, uint256 _dna) internal {
+        // Chapter 11 - SafeMath Part 3 - Part 2
+
+        // Note: We chose not to prevent overflows for year 2038, so leaving this as it is.
         uint256 id = zombies.push(
             Zombie(_name, _dna, 1, uint32(now + cooldownTime), 0, 0)
         ) - 1;
         zombieToOwner[id] = msg.sender;
-        ownerZombieCount[msg.sender]++;
+        // adding SoftMath method here.
+        ownerZombieCount[msg.sender] = ownerZombieCount[msg.sender].add(1);
         emit NewZombie(id, _name, _dna);
     }
 
