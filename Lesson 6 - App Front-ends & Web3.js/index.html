@@ -25,5 +25,43 @@
       src="web3.min.js"
     ></script>
   </head>
-  <body></body>
+  <body>
+    <script>
+      // Chapter 2 - Web3 Providers
+      // Web3 Provider tells our code which node to interact with to handle reads and writes.
+      // It's like setting the URL of remote web server for API calls in Web2 projects.
+      // One can host their own Ethereum node as a provider.
+      // Infura is a third-party service that maintains a set of nodes with a caching layer
+      // for fast reads, which can be accessed for free for providers through their API.
+      // https://infura.io/
+      // Hence, it eliminates the need to maintain our own node.
+
+      // For users to write to our DApp,
+      // we need a way for users to sign transactions with their private keys.
+      // Ethereum (most blockchains) uses a public/private key pair to digitally sign transactions.
+      // Metamask is a browser extension that helps users securely manage their Ethereum accounts,
+      // and private keys.
+      // Note: Metamask uses Infura's servers under the hood as a Web3 provider.
+      // It also gives the user to choose their own provider.
+
+      // Metamask injects their web3 provider into the browser in the global JS object web3.
+      // App can check if web3 exists and then use web3.currentProvider as its provider.
+
+      // Template code to detect if the user has Metamask installed.
+      window.addEventListener("load", function () {
+        // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+        if (typeof web3 !== "undefined") {
+          // Use Mist/MetaMask's provider
+          web3js = new Web3(web3.currentProvider);
+        } else {
+          // Handle the case where the user doesn't have web3. Probably
+          // show them a message telling them to install Metamask in
+          // order to use our app.
+        }
+
+        // Now you can start your app & access web3js freely:
+        startApp();
+      });
+    </script>
+  </body>
 </html>
