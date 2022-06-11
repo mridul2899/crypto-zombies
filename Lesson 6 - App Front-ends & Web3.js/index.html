@@ -24,9 +24,35 @@
       type="text/javascript"
       src="web3.min.js"
     ></script>
+    <!--
+      Chapter 3 - Talking to Contracts - Part 1
+      After deploying the contract on Ethereum, it gets a fixed address.
+      This address is needed to talk to the smart contract.
+
+      ABI stands for Application Binary Interface.
+      It's a representation of a contract's methods in JSON format.
+      It tells Web3.js how to format function calls so that contract understands.
+      Solidity compiler gives the ABI when contract is compiled to deploy on Ethereum.
+      Here, we've stored the ABI in cryptozombies_abi.js file.
+    -->
+    <script
+      language="javascript"
+      type="text/javascript"
+      src="cryptozombies_abi.js"
+    ></script>
   </head>
   <body>
     <script>
+      // Chapter 3 - Talking to Contracts - Part 2
+      var cryptoZombies;
+
+      function startApp() {
+        var cryptoZombiesAddress = "YOUR_CONTRACT_ADDRESS";
+        cryptoZombies = new web3js.eth.Contract(
+          cryptoZombiesABI,
+          cryptoZombiesAddress
+        );
+      }
       // Chapter 2 - Web3 Providers
       // Web3 Provider tells our code which node to interact with to handle reads and writes.
       // It's like setting the URL of remote web server for API calls in Web2 projects.
