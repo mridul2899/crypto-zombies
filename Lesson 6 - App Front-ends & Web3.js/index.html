@@ -81,7 +81,43 @@
           }
         }, 100);
         // The above loop checks the userAccount variable every 100 milliseconds.
+
+        // Chapter 9 - Subscribing to Events
+        // Web3.js allows subscribing to an event and then implement logic on trigger.
+        // Our contract emits an event every time a zombie gets created,
+        // irrespective of the user who created it.
+        // Therefore, we make use of indexed keyword in our contract.
+        // We can filter indexed addresses in our event listener in the front-end.
+
+        // Use `filter` to only fire this code when `_to` equals `userAccount`
+        cryptoZombies.events
+          .Transfer({ filter: { _to: userAccount } })
+          .on("data", function (event) {
+            let data = event.returnValues;
+            // The current user just received a zombie!
+            // Do something here to update the UI to show it
+            getZombiesByOwner(userAccount).then(displayZombies);
+          })
+          .on("error", console.error);
       }
+
+      // It is also possible to query the past events using getPastEvents,
+      // and use fromBlock and toBlock to give Solidity a time range for the event logs.
+      // Here "block" refers to the Ethereum block number.
+      // Since the method can be used to query the event logs since the beginning of time,
+      // this provides an interesting use case: Cheaper form of storage.
+
+      // Using events is much cheaper in terms of gas.
+      // Therefore this can be used to read data historically recorded on the blockchain.
+      // Tradeoff: events are not readable from the smart contract itself, but only front-end.
+
+      // Example:
+      // cryptoZombies
+      //   .getPastEvents("NewZombie", { fromBlock: 0, toBlock: "latest" })
+      //   .then(function (events) {
+      //     // `events` is an array of `event` objects that we can iterate, like we did above
+      //     // This code will get us a list of every zombie that was ever created
+      //   });
 
       // Chapter 6 - Displaying Our Zombie Army - Part 2
       // First clear contents inside the #zombies div, to remove zombies of previous user.
