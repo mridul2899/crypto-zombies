@@ -43,6 +43,11 @@
   </head>
   <body>
     <!--
+      Chapter 7 - Sending Transactions - Part 1
+    -->
+    <div id="txStatus"></div>
+
+    <!--
       Chapter 6 - Displaying Our Zombie Army - Part 1
     -->
     <div id="zombies"></div>
@@ -103,6 +108,58 @@
             `);
           });
         }
+      }
+
+      // Chapter 7 - Sending Transactions - Part 2
+      // Send functions have a few major differences from call functions.
+      // 1. It requires a from address which then becomes msg.sender.
+      // 2. It costs gas.
+      // 3. Significant delay between sending and transaction execution
+      // because of waiting time for the transaction to be included in a block.
+      // Average block time on Ethereum - 15 seconds.
+      // TODO: Update the metric for the present scenario.
+      function createRandomZombie(name) {
+        // This is going to take a while, so update the UI to let the user know
+        // the transaction has been sent
+        $("#txStatus").text(
+          "Creating new zombie on the blockchain. This may take a while..."
+        );
+        // Send the tx to our contract:
+        return cryptoZombies.methods
+          .createRandomZombie(name)
+          .send({ from: userAccount })
+          .on("receipt", function (receipt) {
+            $("#txStatus").text("Successfully created " + name + "!");
+            // Transaction was accepted into the blockchain, let's redraw the UI
+            getZombiesByOwner(userAccount).then(displayZombies);
+          })
+          .on("error", function (error) {
+            // Do something to alert the user their transaction has failed
+            $("#txStatus").text(error);
+          });
+      }
+      // The above function sends a txn and chains some event listeners.
+      // receipt will fire when txn is included into a block on Ethereum.
+      // This means that the zombie is created and saved on our contract.
+      // error will fire if there's an issue that prevented the txn from being
+      // included in a block. Eg: user not sending enough gas.
+
+      // Note: We can optionally specify gas and gasPrice when we call send.
+      // If we don't specify it, however, MetaMask will let the users choose these values.
+
+      function feedOnKitty(zombieId, kittyId) {
+        $("#txStatus").text("Eating a kitty. This may take a while...");
+
+        return cryptoZombies.methods
+          .feedOnKitty(zombieId, kittyId)
+          .send({ from: userAccount })
+          .on("receipt", function (receipt) {
+            $("#txStatus").text("Ate a kitty and spawned a new Zombie!");
+            getZombiesByOwner(userAccount).then(displayZombies);
+          })
+          .on("error", function (error) {
+            $("#txStatus").text(error);
+          });
       }
 
       // Chapter 4 - Calling Contract Functions
