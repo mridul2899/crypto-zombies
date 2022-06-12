@@ -53,6 +53,46 @@
           cryptoZombiesAddress
         );
       }
+
+      // Chapter 4 - Calling Contract Functions
+      // Web3.js has 2 methods to call functions on contract - call and send.
+      // Call is used for view and pure functions.
+      // It runs on a local node and does not create a txn on the blockchain.
+
+      // Note: Since view and pure are read-only and don't change state on the blockchain,
+      // they don't cost gas and the user is not prompted to sign a txn with MetaMask.
+
+      // Syntax: myContract.myMethod(params).call()
+
+      // Send creates a txn and changes data on the blockchain.
+      // Send is needed for any function that isn't view or pure.
+
+      // Note: Sending a txn requires user to pay gas and will pop up MetaMask
+      // to prompt user to sign the txn. This happens automatically when we use send().
+
+      // Syntax: myContract.myMethod(params).send()
+
+      // Solidity automatically creates getter functions for the public variables.
+      // Their names are same as those of the variables.
+      // Example: zombies(15) will fetch data from zombies array for the id 15 (16th element).
+
+      // Note: The codes in this tutorial are compatible with Web3.js version 1.0.
+      // Hence, the codes use promises instead of callbacks.
+
+      function getZombieDetails(id) {
+        return cryptoZombies.methods.zombies(id).call();
+      }
+
+      // 1. Define `zombieToOwner` here
+      function zombieToOwner(id) {
+        return cryptoZombies.methods.zombieToOwner(id).call();
+      }
+
+      // 2. Define `getZombiesByOwner` here
+      function getZombiesByOwner(owner) {
+        return cryptoZombies.methods.getZombiesByOwner(owner).call();
+      }
+
       // Chapter 2 - Web3 Providers
       // Web3 Provider tells our code which node to interact with to handle reads and writes.
       // It's like setting the URL of remote web server for API calls in Web2 projects.
