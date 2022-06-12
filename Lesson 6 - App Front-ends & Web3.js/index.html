@@ -46,12 +46,31 @@
       // Chapter 3 - Talking to Contracts - Part 2
       var cryptoZombies;
 
+      // Chapter 5 - MetaMask & Accounts - Part 1
+      // MetaMask allows the user to manage multiple accounts in their extension.
+      // The currently active account on the injected web3 variable can be seen by:
+      var userAccount;
+
       function startApp() {
         var cryptoZombiesAddress = "YOUR_CONTRACT_ADDRESS";
         cryptoZombies = new web3js.eth.Contract(
           cryptoZombiesABI,
           cryptoZombiesAddress
         );
+
+        // Chapter 5 - MetaMask & Accounts - Part 2
+        // Since the user can change the currently active account any time,
+        // our app needs to monitor the variable, and update the UI accordingly.
+        // We can do that with a setInterval loop, as follows:
+        var accountInterval = setInterval(function () {
+          // Check if account has changed
+          if (web3.eth.accounts[0] !== userAccount) {
+            userAccount = web3.eth.accounts[0];
+            // Call some function to update the UI with the new account
+            getZombiesByOwner(userAccount).then(displayZombies);
+          }
+        }, 100);
+        // The above loop checks the userAccount variable every 100 milliseconds.
       }
 
       // Chapter 4 - Calling Contract Functions
